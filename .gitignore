@@ -1,5 +1,5 @@
 .DS_Store
 LAB1_with_prioqueue/
-cmake-build-debug/
+**/cmake-build-debug/
 CMakeLists.txt
 .idea/
