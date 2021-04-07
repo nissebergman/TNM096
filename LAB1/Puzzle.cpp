@@ -1,5 +1,6 @@
 #include "Puzzle.h"
 #include <algorithm>
+#include <queue>
 
 Puzzle::Puzzle(int _board[9])
         :zeroPos{0}
@@ -42,26 +43,55 @@ int Puzzle::h1()
     return counter;
 }
 
+/*
+ * Old slow vector sort
 bool sortOpenList(Node n1, Node n2){
     return (n1.p.fvalue(n1.g) < n2.p.fvalue(n2.g));
+}
+*/
+
+bool sortClosedList(Node n1, Node n2){
+    int f1 = n1.g;
+    int f2 = n2.g;
+    return (f1 < f2);
+}
+
+struct compareNode{
+    bool operator()(Node& n1, Node& n2)
+    {
+        int f1 = n1.p.h1() + n1.g;
+        int f2 = n2.p.h1() + n2.g;
+
+        return f1 > f2;
+    }
+};
+
+bool Node::operator<(const Node& n) {
+    return(this->g < n.g);
 }
 
 void Puzzle::aStarSolver()
 {
+    int counter{};
     std::vector<Node> closedList;
-    std::vector<Node> openList;
+    std::make_heap(closedList.begin(), closedList.end());
+    std::priority_queue<Node, std::vector<Node>, compareNode> openList;
     std::vector<int> possibleMoves;
 
-
     Node root(0, *this);
-    openList.push_back(root);
+    openList.push(root);
     while (!openList.empty())
     {
-        Node currentNode = openList.front();
-        Puzzle currentPuzzle = openList.front().p;
+        Node currentNode = openList.top();
+        Puzzle currentPuzzle = openList.top().p;
 
-        closedList.push_back(openList.front());
-        openList.erase(openList.begin());
+        closedList.push_back(openList.top());
+        std::push_heap(closedList.begin(), closedList.end());
+        std::sort_heap(closedList.begin(), closedList.end());
+        std::make_heap(closedList.begin(), closedList.end());
+        //std::sort(closedList.begin(), closedList.end(), sortClosedList);
+
+        openList.pop();
 
         // Check if puzzle is solved
         if(currentPuzzle.verifyPuzzle())
@@ -70,7 +100,6 @@ void Puzzle::aStarSolver()
             std::cout << currentNode.p << std::endl;
             break;
         }
-
 
         possibleMoves = currentPuzzle.possibleMoves();
 
@@ -92,17 +121,17 @@ void Puzzle::aStarSolver()
             }
             if(!isInClosedList)
             {
-                openList.push_back(newNode);
+                openList.push(newNode);
             }
         }
 
 
         //Sort openList
-        std::sort(openList.begin(), openList.end(), sortOpenList);
+        //std::sort(openList.begin(), openList.end(), sortOpenList);
 
 
-        std::cout << "Step " << std::endl;
-        std::cout << openList.front().p << std::endl << std::endl;
+        std::cout << "Step " << ++counter << std::endl;
+        std::cout << openList.top().p << std::endl << std::endl;
     }
 
 }

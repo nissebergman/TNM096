@@ -51,6 +51,7 @@ public:
             g{ gscore }, p(_p)
     {};
 
+    bool operator<(const Node& n);
 
     int g{};
     Puzzle p;
