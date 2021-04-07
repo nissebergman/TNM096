@@ -4,7 +4,7 @@
 
 #ifndef LAB1WNODE_NODE_H
 #define LAB1WNODE_NODE_H
-#include "Puzzle.h"
+
 
 
 class Node

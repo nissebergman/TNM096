@@ -1,6 +1,10 @@
 #include "Puzzle.h"
 #include <algorithm>
 #include <queue>
+#include <math.h>
+#include <unordered_set>
+
+
 
 Puzzle::Puzzle(int _board[9])
         :zeroPos{0}
@@ -43,6 +47,33 @@ int Puzzle::h1()
     return counter;
 }
 
+int Puzzle::h2()
+{
+    int distance{};
+
+    for (int i = 0; i < 9; i++)
+    {
+
+        if (board[i] == i - 1 || board[i] == 0)
+        {
+            continue;
+        }
+
+        int currentColumn = (i % 3);
+        int currentRow = (i / 3);
+
+        int correctColumn = ((board[i]-1)%3); //cols 0 till 2
+        int correctRow = ((board[i]-1)/3);
+
+
+        int manhattanDistance = abs(currentRow - correctRow) + abs(currentColumn - correctColumn);
+
+        distance += manhattanDistance;
+    }
+
+    return distance;
+}
+
 /*
  * Old slow vector sort
 bool sortOpenList(Node n1, Node n2){
@@ -50,31 +81,38 @@ bool sortOpenList(Node n1, Node n2){
 }
 */
 
+/*
+ * Old slow vector sort
 bool sortClosedList(Node n1, Node n2){
     int f1 = n1.g;
     int f2 = n2.g;
-    return (f1 < f2);
+    return (f1 > f2);
 }
-
+*/
 struct compareNode{
     bool operator()(Node& n1, Node& n2)
     {
         int f1 = n1.p.h1() + n1.g;
         int f2 = n2.p.h1() + n2.g;
-
-        return f1 > f2;
+        return (f1 > f2);
     }
 };
 
 bool Node::operator<(const Node& n) {
-    return(this->g < n.g);
+    return(this->g > n.g);
 }
 
 void Puzzle::aStarSolver()
 {
     int counter{};
-    std::vector<Node> closedList;
+
+    //std::vector<Node> closedList; //Don't do closedList of a vector, at least not of Node.
+    //Create a hashtable of old puzzles w custom hash function. This is fast as f**k boi
+    std::unordered_set<Puzzle, hashFunction> closedList{};
+
+    //Heap good, but not good enough
     //std::make_heap(closedList.begin(), closedList.end());
+
     std::priority_queue<Node, std::vector<Node>, compareNode> openList;
     std::vector<int> possibleMoves;
 
@@ -85,12 +123,21 @@ void Puzzle::aStarSolver()
         Node currentNode = openList.top();
         Puzzle currentPuzzle = openList.top().p;
 
-        closedList.push_back(openList.top());
-       // std::push_heap(closedList.begin(), closedList.end());
-       //std::sort_heap(closedList.begin(), closedList.end());
-       //std::make_heap(closedList.begin(), closedList.end());
-        std::sort(closedList.begin(), closedList.end(), sortClosedList);
+        //Insert current puzzle into hashtable
+        closedList.insert(currentPuzzle);
 
+        //closedList.push_back(openList.top()); //Old vector semantics
+
+        /* Heapstuff, too slow
+        //std::push_heap(closedList.begin(), closedList.end());
+        /*std::sort_heap(closedList.begin(), closedList.end());
+        std::make_heap(closedList.begin(), closedList.end());
+        */
+
+        // Old slow vector sort
+        //std::sort(closedList.begin(), closedList.end(), sortClosedList);
+
+        //Remove current Node from openList
         openList.pop();
 
         // Check if puzzle is solved
@@ -101,35 +148,29 @@ void Puzzle::aStarSolver()
             break;
         }
 
+        // Fetch all possible moves from current blank space
         possibleMoves = currentPuzzle.possibleMoves();
-
 
         for (int i = 0; i < possibleMoves.size(); i++)
         {
+            // Create new puzzle from every possible move
             Node newNode = Node(currentNode.g + 1, currentNode.p);
             newNode.p.swap(possibleMoves[i], newNode.p);
-            //std::swap(newNode.p.board[zeroPos], newNode.p.board[possibleMoves[i]]);
-            zeroPos = possibleMoves[i];
-            bool isInClosedList = false;
-            for (size_t j = 0; j < closedList.size(); j++)
-            {
-                if (newNode.p == closedList[j].p)
-                {
-                    isInClosedList = true;
-                    break;
-                }
-            }
-            if(!isInClosedList)
-            {
+
+            // Check if puzzle already exists in closedList, otherwise push to openList
+            // (The find function of an unordered set (hashtable) reaches end-iterator if nothing is found)
+            if (closedList.find(newNode.p) == closedList.end()) {
                 openList.push(newNode);
             }
         }
 
 
+        /* Old sort of openlist. Too slow!
         //Sort openList
         //std::sort(openList.begin(), openList.end(), sortOpenList);
+        */
 
-
+        //Print every puzzle evaluated. DOES slow down the calculation slightly but cool stats eh
         //std::cout << "Step " << ++counter << std::endl;
         //std::cout << openList.top().p << std::endl << std::endl;
     }
@@ -146,8 +187,8 @@ void Puzzle::swap(int move, Puzzle& p)
 int Puzzle::fvalue(int gscore)
 {
     int hscore1 = h1();
-    //int hscore2 = h2();
-    return gscore + hscore1;
+    int hscore2 = h2();
+    return gscore + hscore2;
 }
 
 std::vector<int> Puzzle::possibleMoves()
@@ -201,6 +242,17 @@ bool Puzzle::operator==(Puzzle& p)
     return true;
 }
 
+bool Puzzle::operator==(const Puzzle &p) const{
+    for (int i = 0; i < 9; i++)
+    {
+        if (board[i] != p.board[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 
 
@@ -215,6 +267,9 @@ std::ostream& operator<<(std::ostream& os, const Puzzle& P)
     }
     return os;
 }
+
+
+
 
 
 //1 2 3
