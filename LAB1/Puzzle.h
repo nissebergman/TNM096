@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
+
+
 class Puzzle {
 public:
 
@@ -39,20 +41,6 @@ private:
     int board[9];
     int zeroPos;
 
-
-
 };
-class Node
-{
-public:
 
-    //Constructor
-    Node(int gscore, Puzzle _p) :
-            g{ gscore }, p(_p)
-    {};
-
-    bool operator<(const Node& n);
-
-    int g{};
-    Puzzle p;
-};
+#include "Node.h"

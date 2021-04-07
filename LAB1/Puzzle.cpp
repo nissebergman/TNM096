@@ -74,7 +74,7 @@ void Puzzle::aStarSolver()
 {
     int counter{};
     std::vector<Node> closedList;
-    std::make_heap(closedList.begin(), closedList.end());
+    //std::make_heap(closedList.begin(), closedList.end());
     std::priority_queue<Node, std::vector<Node>, compareNode> openList;
     std::vector<int> possibleMoves;
 
@@ -86,10 +86,10 @@ void Puzzle::aStarSolver()
         Puzzle currentPuzzle = openList.top().p;
 
         closedList.push_back(openList.top());
-        std::push_heap(closedList.begin(), closedList.end());
-        std::sort_heap(closedList.begin(), closedList.end());
-        std::make_heap(closedList.begin(), closedList.end());
-        //std::sort(closedList.begin(), closedList.end(), sortClosedList);
+       // std::push_heap(closedList.begin(), closedList.end());
+       //std::sort_heap(closedList.begin(), closedList.end());
+       //std::make_heap(closedList.begin(), closedList.end());
+        std::sort(closedList.begin(), closedList.end(), sortClosedList);
 
         openList.pop();
 
@@ -130,8 +130,8 @@ void Puzzle::aStarSolver()
         //std::sort(openList.begin(), openList.end(), sortOpenList);
 
 
-        std::cout << "Step " << ++counter << std::endl;
-        std::cout << openList.top().p << std::endl << std::endl;
+        //std::cout << "Step " << ++counter << std::endl;
+        //std::cout << openList.top().p << std::endl << std::endl;
     }
 
 }

@@ -3,4 +3,4 @@ project(LAB1WNODE)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(LAB1WNODE main.cpp Puzzle.cpp Puzzle.h)
+add_executable(LAB1WNODE main.cpp Puzzle.cpp Puzzle.h Node.h)

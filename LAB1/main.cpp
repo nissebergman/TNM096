@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Puzzle.h"
+#include "Node.h"
 
 int main()
 {
@@ -9,7 +10,7 @@ int main()
     int crazyPuzzle[] = {8,6,7,2,5,4,3,0,1}; //31 moves
 
     //Create puzzle with custom input, g = 0
-    Puzzle p = Puzzle(easyPuzzle);
+    Puzzle p = Puzzle(mediumPuzzle);
 
     std::cout << "Start puzzle: \n" << p << std::endl;
     p.aStarSolver();
