@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/mac/CLionProjects/TNM096/LAB1/Node.h
+
+/Users/mac/CLionProjects/TNM096/LAB1/Puzzle.cpp
+Puzzle.h
+/Users/mac/CLionProjects/TNM096/LAB1/Puzzle.h
+algorithm
+-
+queue
+-
+math.h
+-
+unordered_set
+-
+stdlib.h
+-
+
+/Users/mac/CLionProjects/TNM096/LAB1/Puzzle.h
+iostream
+-
+vector
+-
+Node.h
+/Users/mac/CLionProjects/TNM096/LAB1/Node.h
+
+/Users/mac/CLionProjects/TNM096/LAB1/main.cpp
+iostream
+-
+Puzzle.h
+/Users/mac/CLionProjects/TNM096/LAB1/Puzzle.h
+Node.h
+/Users/mac/CLionProjects/TNM096/LAB1/Node.h
+unordered_set
+-
+stdlib.h
+-
+chrono
+-
+
