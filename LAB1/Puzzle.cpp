@@ -3,7 +3,7 @@
 #include <queue>
 #include <math.h>
 #include <unordered_set>
-
+#include <stdlib.h>
 
 
 Puzzle::Puzzle(int _board[9])
@@ -23,6 +23,22 @@ Puzzle::Puzzle(const Puzzle& p)
     zeroPos = p.zeroPos;
     for (int i = 0; i < 9; i++){
         board[i] = p.board[i];
+    }
+}
+
+// Randomize a puzzle by swapping the zero nrOfSteps times
+// Therefore, the puzzle is ALWAYS solvable, in contrast to
+// just inserting a random set of numbers.
+void Puzzle::randomize(int nrOfSteps) {
+    std::vector<int> possibleMoves;
+    int randomMove{};
+    // Initialize random seed depending on current time
+    // Otherwise rand will not be working correctly
+    srand(time(NULL));
+    for (int i = 0; i < nrOfSteps; ++i) {
+        possibleMoves = this->possibleMoves();
+        randomMove = rand() % possibleMoves.size();
+        swap(possibleMoves[randomMove], *this);
     }
 }
 
@@ -267,6 +283,8 @@ std::ostream& operator<<(std::ostream& os, const Puzzle& P)
     }
     return os;
 }
+
+
 
 
 

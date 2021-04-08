@@ -10,6 +10,8 @@ public:
     Puzzle(int _board[9]);
     // Copy constructor
     Puzzle(const Puzzle& p);
+    // Randomize a puzzle
+    void randomize(int nrOfSteps);
     // Check if the puzzle is correct
     bool verifyPuzzle();
     // h1 - Count tiles that are misplaced
