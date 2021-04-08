@@ -10,7 +10,7 @@ Puzzle::Puzzle(int _board[9])
         :zeroPos{0}
 {
 
-    for (size_t i = 0; i < 9; i++)
+    for (int i = 0; i < 9; i++)
     {
         board[i] = _board[i];
         if (board[i] == 0)
@@ -44,7 +44,7 @@ void Puzzle::randomize(int nrOfSteps) {
 
 bool Puzzle::verifyPuzzle()
 {
-    for (size_t i = 0; i < 9; i++)
+    for (int i = 0; i < 9; i++)
     {
         if ((board[i] != i + 1) && board[i] != 0)
             return false;
@@ -159,8 +159,11 @@ void Puzzle::aStarSolver()
         // Check if puzzle is solved
         if(currentPuzzle.verifyPuzzle())
         {
-            std::cout << "Operation is done at g = " << currentNode.g << std::endl;
+            std::cout << "Result: " << std::endl;
             std::cout << currentNode.p << std::endl;
+            std::cout << "Operation is done in " << counter <<
+            " steps at g = " << currentNode.g << std::endl;
+
             break;
         }
 
@@ -189,6 +192,7 @@ void Puzzle::aStarSolver()
         //Print every puzzle evaluated. DOES slow down the calculation slightly but cool stats eh
         //std::cout << "Step " << ++counter << std::endl;
         //std::cout << openList.top().p << std::endl << std::endl;
+        ++counter;
     }
 
 }

@@ -3,6 +3,7 @@
 #include "Node.h"
 #include <unordered_set>
 #include <stdlib.h>
+#include <chrono>
 
 int main()
 {
@@ -21,8 +22,19 @@ int main()
     Puzzle p = Puzzle(crazyPuzzle);
 
     std::cout << "Initial puzzle: \n" << p << std::endl;
-    p.aStarSolver();
 
+    // Create start and end time points using system clock through chrono
+    std::chrono::time_point<std::chrono::system_clock> start, stop;
+
+    // Start counting execution time
+    start = std::chrono::system_clock::now();
+    // Start solving
+    p.aStarSolver();
+    // Stop counting execution time
+    stop = std::chrono::system_clock::now();
+    // Get elapsed time between start and stop
+    std::chrono::duration<double> totalTime = stop - start;
+    std::cout << "Solved puzzle in: " << totalTime.count() << " seconds";
     return 0;
 }
 
