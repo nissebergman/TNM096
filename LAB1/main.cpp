@@ -19,7 +19,7 @@ int main()
     p.randomize(60);
      */
 
-    Puzzle p = Puzzle(crazyPuzzle);
+    Puzzle p = Puzzle(difficultPuzzle);
 
     std::cout << "Initial puzzle: \n" << p << std::endl;
 

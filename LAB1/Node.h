@@ -1,7 +1,3 @@
-//
-// Created by Nisse Bergman on 2021-04-07.
-//
-
 #ifndef LAB1WNODE_NODE_H
 #define LAB1WNODE_NODE_H
 

@@ -120,7 +120,7 @@ bool Node::operator<(const Node& n) {
 
 void Puzzle::aStarSolver()
 {
-    int counter{};
+    unsigned long counter{};
 
     //std::vector<Node> closedList; //Don't do closedList of a vector, at least not of Node.
     //Create a hashtable of old puzzles w custom hash function. This is fast as f**k boi
@@ -191,6 +191,7 @@ void Puzzle::aStarSolver()
 
         //Print every puzzle evaluated. DOES slow down the calculation slightly but cool stats eh
         //std::cout << "Step " << ++counter << std::endl;
+        //std::cout << "Depth: " << openList.top().g << std::endl;
         //std::cout << openList.top().p << std::endl << std::endl;
         ++counter;
     }
