@@ -72,7 +72,7 @@ public class Clauses {
         {
             return true;
         }
-        if ((this.pos == c.pos) && (this.neg == c.neg))
+        if ((this.pos.equals(c.pos)) && (this.neg.equals(c.neg)))
         {
             return true;
         }

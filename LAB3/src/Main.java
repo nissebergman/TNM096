@@ -29,7 +29,7 @@ public class Main {
         }
         */
 
-        /* ------- TASK A ----------
+        /* ------- TASK A ---------- */
         ArrayList<Clauses> KB = new ArrayList<Clauses>()
         {
             {
@@ -45,47 +45,47 @@ public class Main {
 
         Bob = Solver.SolverFunction(KB);
 
-        System.out.println("Bob: " + Bob);*/
+        System.out.println("Bob: " + Bob);
 
         /* ------- TASK B ---------- */
+/*
         ArrayList<Clauses> knightProblem = new ArrayList<Clauses>()
         {
             {
-                /*
-                add(new Clauses("~Knc v ~Sc"));
-                add(new Clauses("~Ka v Knc"));
-                add(new Clauses("~Ka v Bs"));
-                add(new Clauses("~Sc v ~Knc"));
-                */
+                //Alex
+                add(new Clauses("A v ~C"));
+                add(new Clauses("~A v C"));
 
-                //Alex tells truth
-                add(new Clauses("Ka v ~Sa v ~Kna"));
-                add(new Clauses("~Kb v Sb v ~Kna"));
-                add(new Clauses("~Kc v ~Sc v Knc"));
-                //Alex lies
-                add(new Clauses("~Ka v ~Sa v Kna"));
-                add(new Clauses("~Kb v ~Sb v Knb"));
-                add(new Clauses("Kc v Sc v ~Knc"));
+                //Ben
+                add(new Clauses("B v A v ~C"));
+                add(new Clauses("~B v ~A v C"));
 
-                //Ben tells truth
-                add(new Clauses("Ka v ~Sa v ~Kna"));
-                add(new Clauses("Kb v Sb v ~Knb"));
-                add(new Clauses("Kc v Sc v ~Knc"));
-
-
+                //Cody
+                add(new Clauses("C v ~A v ~B"));
+                add(new Clauses("~C v A v B"));
             }
         };
-
         ArrayList<Clauses> knightSolution = new ArrayList<Clauses>();
 
         knightSolution = Solver.SolverFunction(knightProblem);
+        //System.out.println(knightSolution);
+        Clauses solutionPuzzle = new Clauses("A v B v ~C");
 
-        System.out.println(knightSolution);
+        for(int i = 0; i < knightSolution.size(); i++)
+        {
+            if((knightSolution.get(i).same(solutionPuzzle)))
+            {
+                System.out.println("Alex is a knight, Ben is a Spy and Cody is a Knave");
+            }
+        }
+
          // (p = a,b n = c)
         //  B = new Clauses; B
         //  C = new Clauses; New resulting Clause
         // Run
 
         //Vector<String> name = new Vector<String>();
+
+         */
     }
 }
